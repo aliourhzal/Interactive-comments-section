@@ -1,0 +1,42 @@
+.info {
+    display: flex;
+    flex-direction: column;
+    grid-area: 1 / 2 / 6 / 11;
+    width: 100%;
+}
+
+.user--info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+    width: 100%;
+}
+
+.user--info .avatar {
+    height: 40px;
+    width: 40px;
+}
+
+.user--info .username {
+    font-weight: 500;
+}
+
+.user--info .Date {
+    color: hsl(211, 10%, 45%);
+}
+
+.user--info .btns {
+    margin-left: auto;
+    display: flex;
+}
+
+.user--comment span {
+    font-weight: 500;
+    color: hsl(238, 40%, 52%);
+}
+
+.user--comment {
+    width: 100%;
+    color: hsl(211, 10%, 45%);
+}

@@ -1,0 +1,38 @@
+.insert--comment{
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: 20px;
+    grid-row-gap: 0px;
+}
+
+.insert--comment form {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.insert--comment form textarea {
+    outline: none;
+    background-color: transparent;
+    border: 1px solid hsl(214, 5%, 72%);
+    border-radius: 5px;
+    padding: 5px;
+    width: 100%;
+    resize: none;
+}
+
+.insert--comment form button {
+    border: none;
+    background-color: hsl(238, 40%, 52%);
+    padding: 15px 30px;
+    border-radius: 10px;
+    height: fit-content;
+    cursor: pointer;
+    color: white;
+}
+
+.insert--comment img {
+    height: 50px;
+    width: 50px;
+}
