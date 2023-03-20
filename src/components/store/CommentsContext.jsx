@@ -5,7 +5,9 @@ const CommentsContext = React.createContext({
     currentUser: {},
     updateComments: (newComment) => {},
     deleteComment: (id) => {},
-    updateRplies: (id, newRpl) => {}
+    updateRplies: (id, newRpl) => {},
+    editComments: (id, value) => {},
+    updateScore: (id,value) => {}
 })
 
 export default CommentsContext;

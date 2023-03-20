@@ -3,6 +3,7 @@
     flex-direction: column;
     grid-area: 1 / 2 / 6 / 11;
     width: 100%;
+    gap: 10px;
 }
 
 .user--info {
@@ -39,4 +40,10 @@
 .user--comment {
     width: 100%;
     color: hsl(211, 10%, 45%);
+    margin: 0;
+}
+
+.user--comment-edit {
+    font-size: 16px;
+    resize: none;
 }
