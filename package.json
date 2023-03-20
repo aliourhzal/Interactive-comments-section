@@ -2,7 +2,7 @@
   "name": "vite-project",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://aliourhzal.github.io/Interactive-comments-section",
+  "homepage": "https://aliourhzal.github.io/Interactive-comments-section/",
   "type": "module",
   "scripts": {
     "predeploy": "yarn build",
