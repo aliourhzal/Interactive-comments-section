@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import Card from "./Card";
 import Counter from "./Counter";
 import Button from "./Botton";
@@ -9,16 +9,27 @@ import CommentsContext from "../store/CommentsContext";
 const EditComment = (props) => {
     return (
         <form>
-            <textarea value={props.oldValue} rows='5'></textarea>
+            <textarea className="user--comment user--comment-edit" value={props.oldValue} onChange={props.onChange}></textarea>
         </form>
     );
 }
 
 const CommentBody = (props) => {
-    const { currentUser, deleteComment } = useContext(CommentsContext);
+    const { currentUser, deleteComment, editComments } = useContext(CommentsContext);
     const [onEdit, setOnEdit] = useState(false);
     const cmt = props.cmt;
+    const [cmtValue, setCmtValue] = useState(cmt.content);
     const isCurrent = currentUser.username === cmt.user.username;
+
+    const updateCmtValue = (e) => {
+        setCmtValue(e.target.value);
+    }
+
+    const saveCmtValue = () => {
+        if (onEdit)
+            editComments(cmt.id, cmtValue);
+        setOnEdit(state => !state)
+    }
 
     return (
         <div className="info">
@@ -34,15 +45,14 @@ const CommentBody = (props) => {
                         isCurrent && <Button label='Delete' src='/images/icon-delete.svg' onClick={() => {deleteComment(cmt.id)}}/>
                     }
                     {
-                        isCurrent && <Button label='Edit' src='/images/icon-edit.svg' onClick={() => setOnEdit(state => !state)}/>
+                        isCurrent && <Button label='Edit' src='/images/icon-edit.svg' onClick={saveCmtValue}/>
                     }
                 </div>
             </div>
             {
-                !onEdit && <p className="user--comment">{cmt.content}</p>
-            }
-            {
-                onEdit && <EditComment oldValue={cmt.content} />
+                !onEdit ?
+                    <p className="user--comment">{cmt.content}</p> :
+                    <EditComment oldValue={cmtValue} onChange={updateCmtValue}/>
             }
         </div>
     );
@@ -51,7 +61,7 @@ const CommentBody = (props) => {
 const CommentBlock = (props) => {
     return (
         <Card  className={`comment ${props.className}`}>
-            <Counter>{props.cmt.score}</Counter>
+            <Counter cmt={props.cmt}/>
             <CommentBody cmt={props.cmt} displayRpl={props.displayRpl}/>
         </Card>
     );

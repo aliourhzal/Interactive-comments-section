@@ -29,6 +29,48 @@ const reducer = (state, action) => {
 		}
 		return (updatedComments);
 	}
+	if (action.type === 'EDIT_CMNT')
+	{
+		let target;
+		target = state.findIndex(cmt => cmt.id === action.id);
+		if (target < 0)
+		{
+			const updatedComments = state.map(cmt => {
+				const target = cmt.replies.find(rpl => rpl.id === action.id);
+				if (target)
+					target.content = action.value;
+				return (cmt);
+			})
+			return (updatedComments);
+		}
+		else
+		{
+			state[target].content = action.value;
+			const updatedComments = [...state];
+			return (updatedComments);
+		}
+	}
+	if (action.type === 'UPDT_SCR')
+	{
+		let target;
+		target = state.findIndex(cmt => cmt.id === action.id);
+		if (target < 0)
+		{
+			const updatedComments = state.map(cmt => {
+				const target = cmt.replies.find(rpl => rpl.id === action.id);
+				if (target)
+					target.score += action.value;
+				return (cmt);
+			})
+			return (updatedComments);
+		}
+		else
+		{
+			state[target].score += action.value;
+			const updatedComments = [...state];
+			return (updatedComments);
+		}
+	}
 }
 
 function App() {
@@ -46,14 +88,23 @@ function App() {
 		dispatch({type: 'DLT_CMNT', id: id});
 	}
 
+	const editComment = (id, value) => {
+		dispatch({type: 'EDIT_CMNT', id: id, value: value});
+	}
+
+	const updateScore = (id, value) => {
+		dispatch({type: 'UPDT_SCR', id: id, value: value});
+	}
+
 	const initContext = {
 		comments: comments,
 		currentUser: data.currentUser,
 		updateComments: addComments,
 		deleteComment: removeComment,
-		updateRplies: addReplies
+		updateRplies: addReplies,
+		editComments: editComment, 
+		updateScore: updateScore
 	}
-    console.log('hello');
 	return (
 		<main>
 			<CommentsContext.Provider value={initContext}>
