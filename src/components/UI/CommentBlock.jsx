@@ -67,4 +67,4 @@ const CommentBlock = (props) => {
     );
 }
 
-export default CommentBlock;
+export default React.memo(CommentBlock);

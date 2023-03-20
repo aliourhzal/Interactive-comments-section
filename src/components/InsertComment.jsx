@@ -5,6 +5,7 @@ import './InsertComment.css'
 
 
 const InsertComment = (props) => {
+    console.log('hello');
     const {currentUser, comments, updateComments, updateRplies} = useContext(CommentsContext);
 
     const newCommentHandler = (e) => {
@@ -46,4 +47,4 @@ const InsertComment = (props) => {
     );
 }
 
-export default InsertComment;
+export default React.memo(InsertComment);

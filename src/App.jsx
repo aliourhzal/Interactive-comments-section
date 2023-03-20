@@ -5,6 +5,28 @@ import CommentsContext from './Components/store/CommentsContext';
 import InsertComment from "./Components/InsertComment";
 
 const reducer = (state, action) => {
+
+	const updateElement = (e) => {
+		let target;
+		target = state.findIndex(cmt => cmt.id === action.id);
+		if (target < 0)
+		{
+			const updatedComments = state.map(cmt => {
+				const target = cmt.replies.find(rpl => rpl.id === action.id);
+				if (target)
+					target[e] = action.value;
+				return (cmt);
+			})
+			return (updatedComments);
+		}
+		else
+		{
+			state[target][e] = action.value;
+			const updatedComments = [...state];
+			return (updatedComments);
+		}
+	}
+
 	if (action.type === 'ADD_CMNT')
 		return ([...state, action.value])
 	if (action.type === 'ADD_RPL')
@@ -30,47 +52,9 @@ const reducer = (state, action) => {
 		return (updatedComments);
 	}
 	if (action.type === 'EDIT_CMNT')
-	{
-		let target;
-		target = state.findIndex(cmt => cmt.id === action.id);
-		if (target < 0)
-		{
-			const updatedComments = state.map(cmt => {
-				const target = cmt.replies.find(rpl => rpl.id === action.id);
-				if (target)
-					target.content = action.value;
-				return (cmt);
-			})
-			return (updatedComments);
-		}
-		else
-		{
-			state[target].content = action.value;
-			const updatedComments = [...state];
-			return (updatedComments);
-		}
-	}
+		return (updateElement('content'));
 	if (action.type === 'UPDT_SCR')
-	{
-		let target;
-		target = state.findIndex(cmt => cmt.id === action.id);
-		if (target < 0)
-		{
-			const updatedComments = state.map(cmt => {
-				const target = cmt.replies.find(rpl => rpl.id === action.id);
-				if (target)
-					target.score += action.value;
-				return (cmt);
-			})
-			return (updatedComments);
-		}
-		else
-		{
-			state[target].score += action.value;
-			const updatedComments = [...state];
-			return (updatedComments);
-		}
-	}
+		return (updateElement('score'));
 }
 
 function App() {
