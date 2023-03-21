@@ -1,15 +1,28 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useReducer } from "react";
 import CommentBlock from "./UI/CommentBlock";
 import InsertComment from "./InsertComment";
 import './CommentInstant.css'
 
-const CommentInstant = (props) => {
-    const [ rplFieldState, setRplFieldState ] = useState(false);
+const checkOwnership = (state, action) => {
+    if (!state.isDisplayed)
+        return ({isDisplayed: true, owner: action.performer});
+    else
+    {
+        if (state.owner === action.performer)
+            return ({isDisplayed: false, owner: state.owner});
+        else
+            return ({isDisplayed: true, owner: action.performer});
+    }
+}
 
-    const displayRplField = () => {
-        setRplFieldState(oldState => !oldState);
+const CommentInstant = (props) => {
+    const [ rplFieldState, dispatch ] = useReducer(checkOwnership, {isDisplayed: false, owner: ''});
+
+    const displayRplField = (performer) => {
+        dispatch({performer: performer});
     }
 
+    console.log(rplFieldState.owner);
     return (
         <div className="comment--instant">
             <CommentBlock cmt={props.cmt} displayRpl={displayRplField}/>
@@ -21,7 +34,7 @@ const CommentInstant = (props) => {
                 })
             }
             {
-               rplFieldState && <InsertComment as='rpl' className='rpl' cmt={props.cmt}/>
+               rplFieldState.isDisplayed && <InsertComment as='rpl' className='rpl' cmt={props.cmt}>{rplFieldState.owner}</InsertComment>
             }
         </div>
     );

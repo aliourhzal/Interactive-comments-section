@@ -14,6 +14,22 @@ const EditComment = (props) => {
     );
 }
 
+const HighLightMantion = (props) => {
+    let splitedContent = props.content.split(' ');
+    let mantion = '';
+    if (splitedContent[0][0] === '@')
+    {
+        mantion = splitedContent[0];
+        splitedContent.shift();
+    }
+    return (
+        <p className="user--comment">
+            {mantion !== '' && <span className="mantion">{`${mantion} `}</span>}
+            {splitedContent.join(' ')}
+        </p>
+    );
+}
+
 const CommentBody = (props) => {
     const { currentUser, deleteComment, editComments } = useContext(CommentsContext);
     const [onEdit, setOnEdit] = useState(false);
@@ -39,7 +55,7 @@ const CommentBody = (props) => {
                 <span className="Date">{cmt.createdAt}</span>
                 <div className="btns">
                     {
-                        !isCurrent && <Button label='Reply' src='/images/icon-reply.svg' onClick={props.displayRpl}/>
+                        !isCurrent && <Button label='Reply' src='/images/icon-reply.svg' onClick={() => props.displayRpl(cmt.user.username)}/>
                     }
                     {
                         isCurrent && <Button label='Delete' src='/images/icon-delete.svg' onClick={() => {deleteComment(cmt.id)}}/>
@@ -51,7 +67,7 @@ const CommentBody = (props) => {
             </div>
             {
                 !onEdit ?
-                    <p className="user--comment">{cmt.content}</p> :
+                    <HighLightMantion content={cmt.content}/>:
                     <EditComment oldValue={cmtValue} onChange={updateCmtValue}/>
             }
         </div>

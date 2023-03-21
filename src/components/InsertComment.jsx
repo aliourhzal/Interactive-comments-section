@@ -1,19 +1,26 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Card from "./UI/Card";
 import CommentsContext from "./store/CommentsContext";
 import './InsertComment.css'
 
 
 const InsertComment = (props) => {
-    console.log('hello');
+    let mantion = '';
+    if (props.children)
+    mantion = `@${props.children} `;
     const {currentUser, comments, updateComments, updateRplies} = useContext(CommentsContext);
+    const [ cmtValue, setCmtValue ] = useState(mantion);
+
+    const onChangeHandler = (e) => {
+        setCmtValue(e.target.value);
+    }
 
     const newCommentHandler = (e) => {
         e.preventDefault();
         const newComment = {
+            id: Date.now(),
             content: e.target[0].value,
             createdAt: 'now',
-            id: Date.now(),
             replies: [],
             score: 0,
             user: {...currentUser}
@@ -40,7 +47,7 @@ const InsertComment = (props) => {
         <Card className={`insert--comment ${props.className}`}>
             <img src={currentUser.image.png} alt=""/>
             <form onSubmit={props.as === 'cmt' ? newCommentHandler : newReplyHandler}>
-                <textarea placeholder="Add a comment..." rows='6'/>
+                <textarea placeholder="Add a comment..." rows='6' value={cmtValue} onChange={onChangeHandler}/>
                 <button>SEND</button>
             </form>
         </Card>

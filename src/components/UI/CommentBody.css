@@ -47,3 +47,8 @@
     font-size: 16px;
     resize: none;
 }
+
+.mantion {
+    color: hsl(238, 40%, 52%);
+    font-weight: 500;
+}
