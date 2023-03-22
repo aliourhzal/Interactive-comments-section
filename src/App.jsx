@@ -1,8 +1,8 @@
 import { useState, useReducer } from 'react'
-import data  from '../design/data.json'
-import CommentSection from './Components/CommentSection';
-import CommentsContext from './Components/store/CommentsContext';
-import InsertComment from "./Components/InsertComment";
+import data  from '../data.json'
+import CommentSection from './components/CommentSection';
+import CommentsContext from './components/store/CommentsContext';
+import InsertComment from "./components/InsertComment";
 
 const reducer = (state, action) => {
 
