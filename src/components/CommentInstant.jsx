@@ -22,7 +22,6 @@ const CommentInstant = (props) => {
         dispatch({performer: performer});
     }
 
-    console.log(rplFieldState.owner);
     return (
         <div className="comment--instant">
             <CommentBlock cmt={props.cmt} displayRpl={displayRplField}/>

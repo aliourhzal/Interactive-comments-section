@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Card from "./UI/Card";
 import CommentsContext from "./store/CommentsContext";
 import './InsertComment.css'
@@ -7,13 +7,18 @@ import './InsertComment.css'
 const InsertComment = (props) => {
     let mantion = '';
     if (props.children)
-    mantion = `@${props.children} `;
+    	mantion = `@${props.children} `;
     const {currentUser, comments, updateComments, updateRplies} = useContext(CommentsContext);
     const [ cmtValue, setCmtValue ] = useState(mantion);
 
     const onChangeHandler = (e) => {
         setCmtValue(e.target.value);
     }
+
+	useEffect(() => {
+		setCmtValue(mantion);
+	}, [mantion])
+
 
     const newCommentHandler = (e) => {
         e.preventDefault();
